@@ -63,11 +63,25 @@ class Book
   end
 
   def lent_out?
-     if @available == false
-        true
-     else false
-     end
+     @@on_loan.each do |book|
+      if book == self
+        return true
+      end
+    end
+    false
   end
+
+     def borrow
+       if lent_out?
+         return false
+       else
+         @due_date = Book.current_due_date
+
+         @@on_shelf.delete(self)
+         @@on_loan << self
+       end
+       true
+     end
 
 
 
@@ -87,4 +101,8 @@ Book.available
 puts Book.browse.inspect
 this_book.inspect
 p this_book.lent_out?
-p Book.current_due_date
+puts "*********"
+Book.available.inspect
+puts "Borrow The BOOK"
+this_book.borrow
+Book.available.inspect
