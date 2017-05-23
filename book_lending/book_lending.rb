@@ -26,8 +26,16 @@ class Book
 
   end
 
-  # Return Borrowed Books
-  
+  # Borrowed Books
+  def self.borrowed
+      @@on_loan
+  end
+
+  #Browse Random Books
+  def self.browse
+    @@on_shelf.sample
+  end
+
 
 
   # INSTANCE METHODS
@@ -60,3 +68,4 @@ this_book = Book.create("fun","A.A.Me", 1788345)
 # this_book.info
 
 Book.available
+puts Book.browse
