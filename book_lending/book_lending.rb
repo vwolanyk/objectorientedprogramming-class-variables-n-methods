@@ -52,7 +52,7 @@ class Book
     @title  =  title
     @author =  author
     @isbn   =  isbn
-    @available = true
+
 
   end
 
@@ -70,9 +70,9 @@ class Book
     end
     false
   end
-
+    # Borrow a Book, move from on shelf > on loan array
      def borrow
-       if lent_out?
+       if self.lent_out?
          return false
        else
          @due_date = Book.current_due_date
@@ -82,6 +82,18 @@ class Book
        end
        true
      end
+
+     def return_to_library
+       if self.lent_out? == false
+         return false
+       else
+         @@on_loan.delete(self)
+         @@on_shelf << self
+         @due_date = nil
+       end
+       true
+     end
+
 
 
 
@@ -105,4 +117,8 @@ puts "*********"
 Book.available.inspect
 puts "Borrow The BOOK"
 this_book.borrow
+Book.available.inspect
+puts "return to Library"
+puts"************"
+this_book.return_to_library
 Book.available.inspect
