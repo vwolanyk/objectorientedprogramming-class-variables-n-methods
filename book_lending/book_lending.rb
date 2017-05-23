@@ -38,6 +38,12 @@ class Book
     @@on_shelf.sample
   end
 
+  # Today's Date plus 14 days
+  def self.current_due_date
+    current_due_date = Time.now + (14 * 86400)
+    current_due_date.ctime
+  end
+
 
 
   # INSTANCE METHODS
@@ -81,3 +87,4 @@ Book.available
 puts Book.browse.inspect
 this_book.inspect
 p this_book.lent_out?
+p Book.current_due_date
