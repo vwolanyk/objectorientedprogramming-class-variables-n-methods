@@ -4,7 +4,7 @@ class Book
   @@on_shelf = []
   @@on_loan  = []
 
-  attr_accessor :due_date, :title , :author
+  attr_accessor :due_date, :title , :author, :available
 
   # CLASS METHODS
 
@@ -12,8 +12,10 @@ class Book
   def self.create(title, author, isbn)
 
     new_book = Book.new(title, author, isbn)
+    puts new_book
 
     @@on_shelf << new_book
+
 
     new_book
 
@@ -44,6 +46,7 @@ class Book
     @title  =  title
     @author =  author
     @isbn   =  isbn
+    @available = true
 
   end
 
@@ -51,6 +54,13 @@ class Book
      puts "Author #{@author}"
      puts "Title: #{@title}"
 
+  end
+
+  def lent_out?
+     if @available == false
+        true
+     else false
+     end
   end
 
 
@@ -68,4 +78,6 @@ this_book = Book.create("fun","A.A.Me", 1788345)
 # this_book.info
 
 Book.available
-puts Book.browse
+puts Book.browse.inspect
+this_book.inspect
+p this_book.lent_out?
