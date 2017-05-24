@@ -8,6 +8,8 @@ class Zombie
   @@default_speed = 1
   @@default_strength = 3
 
+  attr_reader :strength, :speed
+
 #         CLASS METHODS
 
   def self.all
@@ -33,7 +35,7 @@ class Zombie
 
   def self.increase_plague_level
 
-    @@plague_level += rand(3)
+    @@plague_level += rand(@@horde.count)
 
   end
 
@@ -46,6 +48,16 @@ class Zombie
     end
   end
 
+  def self.deadliest_zombie
+
+    zombie_strength_plus_speed = []
+    @@horde.each do |zombie|
+      zombie_strength_plus_speed << (zombie.strength + zombie.speed)
+    end
+
+    @@horde[zombie_strength_plus_speed.index(zombie_strength_plus_speed.max)]
+
+  end
 
 
 
@@ -123,7 +135,7 @@ end
 #
 # Zombie.all.inspect
 # Zombie.all.count
-# Zombie.new_day
+Zombie.new_day
 # Zombie.all.count
 #
 # puts "***"
@@ -131,3 +143,13 @@ end
 # puts zombie2.encounter
 # puts zombie3.encounter
 # puts "***"
+
+Zombie.spawn
+Zombie.spawn
+Zombie.spawn
+p Zombie.all.count
+#
+# puts Zombie.increase_plague_level.inspect
+# p Zombie.all.count
+
+p Zombie.deadliest_zombie
