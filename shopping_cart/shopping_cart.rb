@@ -18,7 +18,8 @@ class ShoppingCart
 
   def remove_product(product_name)
 
-    @products.delete
+    @products.delete_if  {|product| product.name == product_name}
+
   end
 
   def total_before_tax
