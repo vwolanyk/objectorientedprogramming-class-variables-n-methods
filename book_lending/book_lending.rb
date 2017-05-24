@@ -4,7 +4,7 @@ class Book
   @@on_shelf = []
   @@on_loan  = []
 
-  attr_accessor :due_date, :title , :author, :available
+  attr_accessor :due_date, 
 
   # CLASS METHODS
 
@@ -12,11 +12,10 @@ class Book
   def self.create(title, author, isbn)
 
     new_book = Book.new(title, author, isbn)
-    puts new_book
 
     @@on_shelf << new_book
 
-
+    # Return Value
     new_book
 
   end
@@ -40,10 +39,12 @@ class Book
 
   # Today's Date plus 14 days
   def self.current_due_date
+
     current_due_date = Time.now + (14 * 86400)
 
   end
 
+  # Create Array of Overdue Books
   def self.overdue
     overdue_books = []
     @@on_loan.each do |book|
@@ -56,16 +57,16 @@ class Book
   end
 
 
-
   # INSTANCE METHODS
+
   def initialize(title, author, isbn)
 
     @title  =  title
     @author =  author
     @isbn   =  isbn
 
-
   end
+
 
   def info
      puts "Author #{@author}"
@@ -81,13 +82,13 @@ class Book
     end
     false
   end
+
     # Borrow a Book, move from on shelf > on loan array
      def borrow
        if self.lent_out?
          return false
        else
          @due_date = Book.current_due_date
-
          @@on_shelf.delete(self)
          @@on_loan << self
        end
@@ -108,7 +109,7 @@ end
 
 
 # TESTING
-
+# ************
 that_book = Book.create("crying", "Over You", 17883)
 this_book = Book.create("fun","A.A.Me", 1788345)
 # this_book.info
@@ -126,11 +127,11 @@ this_book = Book.create("fun","A.A.Me", 1788345)
 # puts"************"
 # this_book.return_to_library
 # Book.available.inspect
-
-p this_book.borrow.inspect
-puts "**"
-p this_book.inspect
-puts "**"
-this_book.due_date=(Time.now - 90000)
-puts "**"
-p Book.overdue.inspect
+#
+# p this_book.borrow.inspect
+# puts "**"
+# p this_book.inspect
+# puts "**"
+# this_book.due_date=(Time.now - 90000)
+# puts "**"
+# p Book.overdue.inspect
