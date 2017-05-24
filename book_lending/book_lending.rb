@@ -4,7 +4,7 @@ class Book
   @@on_shelf = []
   @@on_loan  = []
 
-  attr_accessor :due_date, 
+  attr_accessor :due_date,
 
   # CLASS METHODS
 
@@ -64,6 +64,7 @@ class Book
     @title  =  title
     @author =  author
     @isbn   =  isbn
+    @hold   =   false
 
   end
 
@@ -86,6 +87,8 @@ class Book
     # Borrow a Book, move from on shelf > on loan array
      def borrow
        if self.lent_out?
+         puts "#{@title} is Now on Hold"
+         @hold = true
          return false
        else
          @due_date = Book.current_due_date
@@ -104,6 +107,19 @@ class Book
          @due_date = nil
        end
        true
+     end
+
+    #  Renew a Book
+     def renew
+       if self.lent_out? == false
+         return false
+       elsif
+          @hold == true
+         puts "Cannot Renew: #{@title} is currently on hold"
+         return false
+       else
+         @due_date = Time.now + (7 * 86400)
+       end
      end
 end
 
@@ -128,10 +144,14 @@ this_book = Book.create("fun","A.A.Me", 1788345)
 # this_book.return_to_library
 # Book.available.inspect
 #
-# p this_book.borrow.inspect
-# puts "**"
-# p this_book.inspect
-# puts "**"
-# this_book.due_date=(Time.now - 90000)
-# puts "**"
-# p Book.overdue.inspect
+p this_book.borrow.inspect
+puts "**"
+p this_book.inspect
+puts "**"
+this_book.borrow
+this_book.due_date=(Time.now - 90000)
+puts "**"
+p Book.overdue.inspect
+puts "**"
+this_book.renew
+p Book.overdue.inspect
