@@ -21,8 +21,33 @@ class Zombie
       new_zombie = Zombie.new(rand(@@max_speed), rand(@@max_strength))
       @@horde << new_zombie
     end
+  end
+
+  def self.new_day
+
+      some_die_off
+      spawn
+      increase_plague_level
 
   end
+
+  def self.increase_plague_level
+
+    @@plague_level += rand(3)
+
+  end
+
+  def self.some_die_off
+
+    rand(0..10).times do
+
+      @@horde.delete_at(rand(@@horde.count))
+
+    end
+  end
+
+
+
 
 #         INSTANCE METHODS
 
@@ -46,4 +71,11 @@ class Zombie
 end
 
 p Zombie.spawn
+p Zombie.all
+p Zombie.all.count
+
+puts "**"
+
+p Zombie.some_die_off
+p Zombie.all.count
 p Zombie.all
