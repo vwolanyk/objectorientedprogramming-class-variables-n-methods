@@ -41,7 +41,18 @@ class Book
   # Today's Date plus 14 days
   def self.current_due_date
     current_due_date = Time.now + (14 * 86400)
-    current_due_date.ctime
+
+  end
+
+  def self.overdue
+    overdue_books = []
+    @@on_loan.each do |book|
+
+      if book.due_date < Time.now
+        overdue_books << book
+      end
+    end
+      return overdue_books
   end
 
 
@@ -93,13 +104,6 @@ class Book
        end
        true
      end
-
-
-
-
-
-
-
 end
 
 
@@ -109,16 +113,24 @@ that_book = Book.create("crying", "Over You", 17883)
 this_book = Book.create("fun","A.A.Me", 1788345)
 # this_book.info
 
-Book.available
-puts Book.browse.inspect
-this_book.inspect
-p this_book.lent_out?
-puts "*********"
-Book.available.inspect
-puts "Borrow The BOOK"
-this_book.borrow
-Book.available.inspect
-puts "return to Library"
-puts"************"
-this_book.return_to_library
-Book.available.inspect
+# Book.available
+# puts Book.browse.inspect
+# this_book.inspect
+# p this_book.lent_out?
+# puts "*********"
+# Book.available.inspect
+# puts "Borrow The BOOK"
+# this_book.borrow
+# Book.available.inspect
+# puts "return to Library"
+# puts"************"
+# this_book.return_to_library
+# Book.available.inspect
+
+p this_book.borrow.inspect
+puts "**"
+p this_book.inspect
+puts "**"
+this_book.due_date=(Time.now - 90000)
+puts "**"
+p Book.overdue.inspect
